@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useParams } from 'react-router-dom';
 
 const guestTokenUrl = (courseId: string) => `${getConfig().LMS_BASE_URL}/aspects/superset_guest_token/${courseId}`;
-const dashboardUrl = (usageKey: string) => `${getConfig().LMS_BASE_URL}/aspects/superset_embedded_dashboard/${usageKey}`;
+const dashboardUrl = (usageKey: string) => `${getConfig().LMS_BASE_URL}/aspects/superset_in_context_dashboard/${usageKey}`;
 
 const fetchGuestTokenFromBackend = async (courseId: string) => {
   const { data } = await getAuthenticatedHttpClient()
@@ -54,7 +54,9 @@ export const useDashboardEmbed = (containerId: string, usageKey: string, visible
               visible: false,
               expanded: false,
             },
-            urlParams: {},
+            urlParams: {
+              native_filters: dashboardConfig.courseRuns[dashboardConfig.defaultCourseRun].native_filters,
+            },
           },
         });
         setLoaded(true);
