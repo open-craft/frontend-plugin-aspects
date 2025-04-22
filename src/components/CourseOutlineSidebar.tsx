@@ -3,7 +3,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { useCourseBlocks } from '../hooks';
 import { BlockTypes } from '../constants';
 import { AspectsSidebar } from './AspectsSidebar';
-import { useAspectsSidebarContext } from './AspectsSidebarContext';
+import { useAspectsSidebarContext } from '../hooks';
 import messages from '../messages';
 import { Section, Block, castToBlock } from '../types';
 

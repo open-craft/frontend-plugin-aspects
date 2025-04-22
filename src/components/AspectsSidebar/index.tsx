@@ -7,7 +7,8 @@ import {
   ArrowBack, AutoGraph, Close, Warning,
 } from '@openedx/paragon/icons';
 import { BlockTypes, ICON_MAP } from '../../constants';
-import { useAspectsSidebarContext } from '../AspectsSidebarContext';
+import { useAspectsSidebarContext } from '../../hooks';
+
 import messages from '../../messages';
 import { CourseContentList } from './CourseContentList';
 import { Dashboard } from './Dashboard';

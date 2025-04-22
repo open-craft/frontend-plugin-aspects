@@ -3,7 +3,7 @@ import { Button } from '@openedx/paragon';
 import { AutoGraph } from '@openedx/paragon/icons';
 import * as React from 'react';
 import messages from '../messages';
-import { useAspectsSidebarContext } from './AspectsSidebarContext';
+import { useAspectsSidebarContext } from '../hooks';
 
 export function CourseHeaderButton() {
   const intl = useIntl();

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useAspectsSidebarContext } from './AspectsSidebarContext';
+import { useAspectsSidebarContext } from '../hooks';
 
 /**
  * This plugin component is meant to wrap the sidebar so that the other/default sidebars

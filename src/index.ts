@@ -1,5 +1,3 @@
-export { AspectsSidebarContext } from './components/AspectsSidebarContext';
-export { AspectsSidebarProvider } from './components/AspectsSidebarContext';
 export { CourseHeaderButton } from './components/CourseHeaderButton';
 export { SidebarToggleWrapper } from './components/SidebarToggleWrapper';
 export { UnitActionsButton } from './components/UnitActionsButton';

@@ -1,8 +1,9 @@
 import { camelCaseObject, getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { useQuery } from '@tanstack/react-query';
+import {hookstate, useHookstate} from '@hookstate/core';
 import * as React from 'react';
-import { Block, BlockResponse, UsageId } from './types';
+import type { Block, BlockResponse, UsageId } from './types';
 
 const guestTokenUrl = (courseId: string) => `${getConfig().LMS_BASE_URL}/aspects/superset_guest_token/${courseId}`;
 const dashboardUrl = (usageKey: string) => `${getConfig().LMS_BASE_URL}/aspects/superset_in_context_dashboard/${usageKey}`;
@@ -97,3 +98,49 @@ export const useChildBlockCounts = (usageKey: string) : { data: BlockResponse | 
     select: (response: { data: BlockResponse }) => (response.data),
   });
 };
+
+
+type SidebarState = {
+  sidebarOpen: boolean,
+  activeBlock: Block | null,
+  filteredBlocks: string[],
+  filterUnit: Block | null,
+};
+
+const sidebarState = hookstate<SidebarState>({
+  sidebarOpen: false,
+  activeBlock:  null,
+  filteredBlocks: [],
+  filterUnit: null,
+});
+
+interface SidebarContextFunctions {
+  setActiveBlock: (block: Block | null) => void,
+  setFilteredBlocks: (blocks: string[]) => void,
+  setSidebarOpen: (value: boolean) => void,
+  setFilterUnit: (block: Block | null) => void,
+}
+
+interface SidebarContext extends SidebarState, SidebarContextFunctions {}
+
+export const useAspectsSidebarContext = (): SidebarContext => {
+  const state = useHookstate(sidebarState);
+
+  return {
+    sidebarOpen: state.sidebarOpen.get(),
+    activeBlock: state.activeBlock.get(),
+    filteredBlocks: state.filteredBlocks.get(),
+    setSidebarOpen: (value: boolean) => {
+      state.sidebarOpen.set(value);
+    },
+    setActiveBlock: (value: Block|null) => {
+      state.activeBlock.set(value);
+    },
+    setFilteredBlocks: (value: string[]) => {
+      state.filteredBlocks.set(value);
+    },
+    setFilterUnit: (value: Block|null)=> {
+      state.filterUnit.set(value);
+    },
+  }
+}
