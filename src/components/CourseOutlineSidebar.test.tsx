@@ -58,7 +58,7 @@ describe('CourseOutlineSidebar', () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it('renders course dashbaord when there is not data and sidebar is open', () => {
+  it('renders course dashboard when there is not data and sidebar is open', () => {
     const { getByText } = renderComponent(
       <CourseOutlineSidebar
         courseId="DemoCourse"
