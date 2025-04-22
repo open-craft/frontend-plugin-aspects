@@ -1,20 +1,11 @@
 import * as React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Block, useCourseBlocks } from '../hooks';
+import { useCourseBlocks } from '../hooks';
 import { BlockTypes } from '../constants';
 import { AspectsSidebar } from './AspectsSidebar';
 import { useAspectsSidebarContext } from './AspectsSidebarContext';
 import messages from '../messages';
-
-interface ChildInfo {
-  children: Block[]
-}
-
-interface Section {
-  id: string;
-  displayName: string;
-  childInfo: ChildInfo;
-}
+import { Section, Block, castToBlock } from '../types';
 
 interface Props {
   courseId: string;
@@ -51,7 +42,7 @@ export function CourseOutlineSidebar({ courseId, courseName, sections }: Props) 
   if (!filteredBlocks?.length && gradedSubsections?.length) {
     contentLists.push({
       title: intl.formatMessage(messages.gradedSubsectionAnalytics),
-      blocks: gradedSubsections,
+      blocks: castToBlock(gradedSubsections) as Block[],
     });
   }
   if (problems?.length) {

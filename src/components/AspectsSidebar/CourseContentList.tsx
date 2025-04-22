@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, Icon } from '@openedx/paragon';
 import { ArrowDropDown, ArrowDropUp, ChevronRight } from '@openedx/paragon/icons';
-import { Block } from '../../hooks';
 import messages from '../../messages';
 import { ICON_MAP } from '../../constants';
+import { Block } from '../../types';
 
 interface CourseContentListProps {
   title: string,
@@ -35,12 +35,12 @@ export function CourseContentList({
         >
           <h5 className="h5 flex-grow-1 text-left d-flex align-items-center">
             <Icon
-              src={ICON_MAP[block.category || block.type || block.blockType]}
+              src={ICON_MAP[block.type]}
               size="xs"
               className="mr-2 text-gray"
               aria-hidden
             />
-            <span>{block.displayName || block.name}</span>
+            <span>{block.displayName}</span>
           </h5>
           <Icon src={ChevronRight} aria-hidden />
         </Button>

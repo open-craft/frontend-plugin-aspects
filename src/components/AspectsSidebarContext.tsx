@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ReactNode } from 'react';
-import { Block } from '../hooks';
+
+import { Block } from '../types';
 
 export type SidebarContext = {
   sidebarOpen: boolean,

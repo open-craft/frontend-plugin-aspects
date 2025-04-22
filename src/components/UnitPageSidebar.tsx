@@ -1,14 +1,14 @@
 import * as React from 'react';
 // @ts-ignore
 import { useIframe } from 'CourseAuthoring/generic/hooks/context/hooks';
-import { Block } from '../hooks';
 import { BlockTypes } from '../constants';
 import { AspectsSidebar } from './AspectsSidebar';
+import { castToBlock, XBlock, Block } from '../types';
 
 interface Props {
   blockId: string;
   unitTitle: string;
-  verticalBlocks: Block[];
+  verticalBlocks: XBlock[];
 }
 
 export function UnitPageSidebar({
@@ -17,9 +17,13 @@ export function UnitPageSidebar({
   const { sendMessageToIframe } = useIframe();
   const contentList = {
     title: '',
-    blocks: React.useMemo(() => (
-      verticalBlocks.filter(block => (block.blockType === 'problem') || (block.blockType === 'video'))
-    ), [verticalBlocks]),
+    blocks: React.useMemo(
+      () => {
+        const blocks = castToBlock(verticalBlocks) as Block[];
+        return blocks.filter(block => (block.type === 'problem') || (block.type === 'video'));
+      },
+      [verticalBlocks],
+    ),
   };
 
   return (

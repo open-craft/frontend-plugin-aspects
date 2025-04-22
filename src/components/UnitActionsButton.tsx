@@ -4,11 +4,12 @@ import { AutoGraph } from '@openedx/paragon/icons';
 import * as React from 'react';
 import messages from '../messages';
 import { useAspectsSidebarContext } from './AspectsSidebarContext';
-import { useChildBlockCounts, Block } from '../hooks';
+import { useChildBlockCounts } from '../hooks';
+import { Block, Unit, castToBlock } from '../types';
 
 export function UnitActionsButton({
   unit,
-}: { unit: Block }) {
+}: { unit: Unit }) {
   const intl = useIntl();
   const {
     sidebarOpen,
@@ -44,9 +45,9 @@ export function UnitActionsButton({
           setFilteredBlocks([]);
           setFilterUnit(null);
         } else {
-          setActiveBlock(unit);
+          setActiveBlock(castToBlock(unit) as Block);
           setFilteredBlocks(Object.keys(data.blocks));
-          setFilterUnit(unit);
+          setFilterUnit(castToBlock(unit) as Block);
         }
       }}
     />

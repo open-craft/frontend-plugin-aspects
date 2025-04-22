@@ -7,11 +7,11 @@ import {
   ArrowBack, AutoGraph, Close, Warning,
 } from '@openedx/paragon/icons';
 import { BlockTypes, ICON_MAP } from '../../constants';
-import { Block } from '../../hooks';
 import { useAspectsSidebarContext } from '../AspectsSidebarContext';
 import messages from '../../messages';
 import { CourseContentList } from './CourseContentList';
 import { Dashboard } from './Dashboard';
+import { Block } from '../../types';
 
 type ContentList = {
   title: string;
@@ -48,11 +48,11 @@ export function AspectsSidebar({
   }
 
   const hideDashboard: boolean = (
-    (!!activeBlock && (activeBlock.category === 'vertical'))
+    (!!activeBlock && (activeBlock.type === 'vertical'))
     || (!activeBlock && (blockType === 'vertical'))
   );
-  const topTitle = activeBlock?.name || activeBlock?.displayName || title;
-  const activeBlockType = activeBlock?.type || activeBlock?.category || activeBlock?.blockType || blockType;
+  const topTitle = activeBlock?.displayName || title;
+  const activeBlockType = activeBlock?.type || blockType;
   const contentListSize: number = contentLists.reduce((acc, list) => acc + list.blocks.length, 0);
 
   const activateDashboard = (block: Block) => {

@@ -2,30 +2,7 @@ import { camelCaseObject, getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
-
-export type UsageId = string;
-
-export type Block = {
-  id: UsageId;
-  type: string;
-  displayName: string;
-  graded: boolean;
-  // block type of things from API
-  category: string;
-
-  // vertical block
-  blockType: string;
-  name: string;
-};
-
-export type BlockMap = {
-  [blockId: UsageId]: Block;
-};
-
-type BlockResponse = {
-  blocks: BlockMap;
-  root: UsageId;
-};
+import { Block, BlockResponse, UsageId } from './types';
 
 const guestTokenUrl = (courseId: string) => `${getConfig().LMS_BASE_URL}/aspects/superset_guest_token/${courseId}`;
 const dashboardUrl = (usageKey: string) => `${getConfig().LMS_BASE_URL}/aspects/superset_in_context_dashboard/${usageKey}`;
@@ -115,7 +92,7 @@ export const useChildBlockCounts = (usageKey: string) : { data: BlockResponse | 
   url.searchParams.append('depth', '1');
 
   return useQuery({
-    queryKey: ['blocks', usageKey],
+    queryKey: ['child-blocks', usageKey],
     queryFn: async () => getAuthenticatedHttpClient().get(url.toString()),
     select: (response: { data: BlockResponse }) => (response.data),
   });
