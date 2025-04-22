@@ -3,7 +3,7 @@ import {
 } from './types';
 
 describe('castToBlock', () => {
-  it('converts subsections to blocks', () => {
+  it('converts subsections array to blocks array', () => {
     const subSections: SubSection[] = [
       {
         category: 'sequential',
@@ -23,12 +23,45 @@ describe('castToBlock', () => {
       type: 'sequential',
       displayName: 'Test SubSection One',
       graded: false,
+      childInfo: {
+        category: 'vertical',
+        children: [],
+        displayName: 'Units',
+      },
     }];
 
     expect(castToBlock(subSections)).toEqual(blocks);
   });
 
-  it('converts XBlocks to blocks', () => {
+  it('converts subsection item to block item', () => {
+    const subSection: SubSection = {
+      category: 'sequential',
+      childInfo: {
+        category: 'vertical',
+        children: [],
+        displayName: 'Units',
+      },
+      displayName: 'Test SubSection One',
+      graded: false,
+      id: 'block-v1:subsection',
+    };
+
+    const block: Block = {
+      id: 'block-v1:subsection',
+      type: 'sequential',
+      displayName: 'Test SubSection One',
+      graded: false,
+      childInfo: {
+        category: 'vertical',
+        children: [],
+        displayName: 'Units',
+      },
+    };
+
+    expect(castToBlock(subSection)).toEqual(block);
+  });
+
+  it('converts XBlocks array to blocks array', () => {
     const xblocks: XBlock[] = [{
       id: 'block-v1:problem-block',
       blockType: 'problem',

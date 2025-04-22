@@ -41,6 +41,7 @@ export type Block = {
   type: string;
   displayName: string;
   graded?: boolean;
+  childInfo?: any
 };
 export type BlockMap = {
   [blockId: UsageId]: Block;
@@ -50,6 +51,18 @@ export type BlockResponse = {
   root: UsageId;
 };
 
+function categoryItemToBlock(item: SubSection | Unit): Block {
+  const block: Block = {
+    id: item.id,
+    displayName: item.displayName,
+    type: item.category,
+    graded: item.graded,
+  };
+  if ('childInfo' in item) {
+    block.childInfo = item.childInfo;
+  }
+  return block;
+}
 /**
  * Converts multiple types of context blocks into a consistent type
  * that can be used across the components.
@@ -59,13 +72,13 @@ export type BlockResponse = {
  */
 export function castToBlock(items: SubSection | SubSection[] | Unit | XBlock[]): Block[] | Block {
   if (!Array.isArray(items)) {
-    return { ...items, type: items.category };
+    return categoryItemToBlock(items);
   }
 
   const blocks: Block[] = [];
   for (const item of items) {
     if ('category' in item) {
-      blocks.push({ ...item, type: item.category });
+      blocks.push(categoryItemToBlock(item));
     } else if ('blockType' in item) { // XBlock
       blocks.push({
         id: item.id,
