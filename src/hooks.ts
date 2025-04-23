@@ -1,7 +1,7 @@
 import { camelCaseObject, getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { useQuery } from '@tanstack/react-query';
-import {hookstate, useHookstate} from '@hookstate/core';
+import { hookstate, useHookstate } from '@hookstate/core';
 import * as React from 'react';
 import type { Block, BlockResponse, UsageId } from './types';
 
@@ -99,7 +99,6 @@ export const useChildBlockCounts = (usageKey: string) : { data: BlockResponse | 
   });
 };
 
-
 type SidebarState = {
   sidebarOpen: boolean,
   activeBlock: Block | null,
@@ -109,7 +108,7 @@ type SidebarState = {
 
 const sidebarState = hookstate<SidebarState>({
   sidebarOpen: false,
-  activeBlock:  null,
+  activeBlock: null,
   filteredBlocks: [],
   filterUnit: null,
 });
@@ -129,18 +128,19 @@ export const useAspectsSidebarContext = (): SidebarContext => {
   return {
     sidebarOpen: state.sidebarOpen.get(),
     activeBlock: state.activeBlock.get(),
-    filteredBlocks: state.filteredBlocks.get(),
+    filteredBlocks: state.filteredBlocks.get() as string[],
+    filterUnit: state.filterUnit.get(),
     setSidebarOpen: (value: boolean) => {
       state.sidebarOpen.set(value);
     },
-    setActiveBlock: (value: Block|null) => {
+    setActiveBlock: (value: Block | null) => {
       state.activeBlock.set(value);
     },
     setFilteredBlocks: (value: string[]) => {
       state.filteredBlocks.set(value);
     },
-    setFilterUnit: (value: Block|null)=> {
+    setFilterUnit: (value: Block | null) => {
       state.filterUnit.set(value);
     },
-  }
-}
+  };
+};

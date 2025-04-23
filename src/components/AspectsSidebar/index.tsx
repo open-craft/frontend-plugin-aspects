@@ -40,9 +40,17 @@ export function AspectsSidebar({
     filterUnit, setFilterUnit,
   } = useAspectsSidebarContext();
 
-  // The activeBlock is not reset during page navigations, leading to
-  // stale dashboards. This useEffect ensures it is reset.
-  React.useEffect(() => setActiveBlock(null), [setActiveBlock]);
+  // The activeBlock is not reset during page navigations, leading to stale dashboards.
+  // This useEffect ensures things are reset. The "set" functions are not included in
+  // the dependency list as they are recreated everytime the "hookState" changes, thus
+  // resetting everything to null state on every re-render. Setting it to an empty
+  // array makes sure it is run only on the first render after navigation.
+  React.useEffect(() => {
+    setActiveBlock(null);
+    setFilterUnit(null);
+    setFilteredBlocks([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!sidebarOpen) {
     return null;
